@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "512130844650",
+    "firebase_url": "https://abasu-services.firebaseio.com",
+    "project_id": "abasu-services",
+    "storage_bucket": "abasu-services.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512130844650:android:ae02e190a35a265f935493",
+        "android_client_info": {
+          "package_name": "com.retail_mobile.abasu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3SAmwHoHr63NY9EGciX5s05JHdlsCC_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512130844650:android:737b471eefc3efb3935493",
+        "android_client_info": {
+          "package_name": "com.retailmobile.abasu_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3SAmwHoHr63NY9EGciX5s05JHdlsCC_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
