@@ -36,8 +36,6 @@ class AppDropdownButton extends StatelessWidget {
                   color: AppColors.straw, width: BaseStyles.borderWidth)),
           child: Row(
             children: <Widget>[
-              Container(
-                  width: 35.0, child: BaseStyles.iconPrefix(materialIcon)),
               Expanded(
                 child: Center(
                     child: GestureDetector(
@@ -67,8 +65,6 @@ class AppDropdownButton extends StatelessWidget {
                   color: AppColors.straw, width: BaseStyles.borderWidth)),
           child: Row(
             children: <Widget>[
-              Container(
-                  width: 35.0, child: BaseStyles.iconPrefix(materialIcon)),
               Expanded(
                 child: Center(
                   child: DropdownButton<String>(
@@ -94,7 +90,7 @@ class AppDropdownButton extends StatelessWidget {
         .map((item) => DropdownMenuItem<String>(
               child: Text(
                 item,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
               value: item,
             ))
@@ -105,7 +101,7 @@ class AppDropdownButton extends StatelessWidget {
     return items
         .map((item) => Text(
               item,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               style: TextStyles.picker,
             ))
         .toList();

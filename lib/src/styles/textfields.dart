@@ -16,7 +16,7 @@ abstract class TextFieldStyles {
 
   static Widget iconPrefix(IconData icon) => BaseStyles.iconPrefix(icon);
 
-  static TextAlign get textAlign => TextAlign.center;
+  static TextAlign get textAlign => TextAlign.left;
 
   static BoxDecoration get cupertinoDecoration {
     return BoxDecoration(
@@ -37,9 +37,9 @@ abstract class TextFieldStyles {
   }
 
   static InputDecoration materialDecoration(
-      String hintText, IconData icon, String errorText) {
+      String hintText, String errorText) {
     return InputDecoration(
-      contentPadding: EdgeInsets.all(8.0),
+      contentPadding: EdgeInsets.all(16.0),
       hintText: hintText,
       hintStyle: TextFieldStyles.placeholder,
       border: InputBorder.none,
@@ -61,7 +61,6 @@ abstract class TextFieldStyles {
           borderSide:
               BorderSide(color: AppColors.red, width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
-      prefixIcon: iconPrefix(icon),
     );
   }
 }

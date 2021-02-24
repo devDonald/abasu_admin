@@ -8,12 +8,49 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:512130844650:android:dc62d3547469854d935493",
+        "android_client_info": {
+          "package_name": "com.abasu.abasu_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3SAmwHoHr63NY9EGciX5s05JHdlsCC_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:512130844650:android:ae02e190a35a265f935493",
         "android_client_info": {
           "package_name": "com.retail_mobile.abasu"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "512130844650-l7s6v52rppol2o2j22i618mm143oncsc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.retail_mobile.abasu",
+            "certificate_hash": "e666dcc3244ef10d55088e8636c6d36df574b992"
+          }
+        },
         {
           "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
           "client_type": 3
@@ -43,6 +80,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "512130844650-frg3n77ol0jggtq2cd3m2skp4a07a365.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.retailmobile.abasu_admin",
+            "certificate_hash": "e666dcc3244ef10d55088e8636c6d36df574b992"
+          }
+        },
         {
           "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
           "client_type": 3

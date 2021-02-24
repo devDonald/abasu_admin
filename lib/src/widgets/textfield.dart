@@ -105,7 +105,7 @@ class _AppTextFieldState extends State<AppTextField> {
           cursorColor: TextFieldStyles.cursorColor,
           style:TextFieldStyles.text,
           textAlign: TextFieldStyles.textAlign,
-          decoration: TextFieldStyles.materialDecoration(widget.hintText, widget.materialIcon,widget.errorText),
+          decoration: TextFieldStyles.materialDecoration(widget.hintText,widget.errorText),
           obscureText: widget.obscureText,
           controller: _controller,
           onChanged: widget.onChanged,

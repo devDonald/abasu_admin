@@ -1,207 +1,393 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:farmers_market/src/blocs/auth_bloc.dart';
-import 'package:farmers_market/src/blocs/product_bloc.dart';
-import 'package:farmers_market/src/blocs/admin_bloc.dart';
-import 'package:farmers_market/src/models/admin.dart';
-import 'package:farmers_market/src/styles/base.dart';
-import 'package:farmers_market/src/styles/colors.dart';
-import 'package:farmers_market/src/styles/text.dart';
-import 'package:farmers_market/src/widgets/button.dart';
-import 'package:farmers_market/src/widgets/sliver_scaffold.dart';
-import 'package:farmers_market/src/widgets/textfield.dart';
+import 'package:farmers_market/authentication/login.dart';
+import 'package:farmers_market/src/screens/admin_menu.dart';
+import 'package:farmers_market/src/services/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
-class EditAdmin extends StatefulWidget {
-  final String adminId;
+class EditProfile extends StatefulWidget {
+  static const String id = 'EditProfile';
+  final String name, email, city, phone, address, marital, state, adminId;
 
-  EditAdmin({this.adminId});
-
+  const EditProfile(
+      {Key key,
+      this.name,
+      this.email,
+      this.city,
+      this.phone,
+      this.address,
+      this.marital,
+      this.state,
+      this.adminId})
+      : super(key: key);
   @override
-  _EditAdminState createState() => _EditAdminState();
+  MapScreenState createState() => MapScreenState();
 }
 
-class _EditAdminState extends State<EditAdmin> {
-  StreamSubscription _savedSubscription;
+class MapScreenState extends State<EditProfile> {
+  ProgressDialog pr;
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _fullName = TextEditingController();
+  final TextEditingController _phoneNumber = TextEditingController();
+  final TextEditingController _city = TextEditingController();
+  final TextEditingController _address = TextEditingController();
+  final TextEditingController _marital = TextEditingController();
+  final TextEditingController _state = TextEditingController();
+
   @override
   void initState() {
-    var adminBloc = Provider.of<AdminBloc>(context, listen: false);
-    _savedSubscription = adminBloc.adminSaved.listen((saved) {
-      if (saved != null && saved == true && context != null) {
-        Fluttertoast.showToast(
-            msg: "Vendor Saved",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 2,
-            backgroundColor: AppColors.lightblue,
-            textColor: Colors.white,
-            fontSize: 16.0);
-
-        Navigator.of(context).pop();
-      }
-    });
     super.initState();
+    loadDetails();
   }
 
-  @override
-  void dispose() {
-    _savedSubscription.cancel();
-    super.dispose();
+  void loadDetails() {
+    if (mounted) {
+      setState(() {
+        _email.text = widget.email;
+        _fullName.text = widget.name;
+        _phoneNumber.text = widget.phone;
+        _city.text = widget.city;
+        _address.text = widget.address;
+        _marital.text = widget.marital;
+        _state.text = widget.state;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var vendorBloc = Provider.of<AdminBloc>(context);
-    var authBloc = Provider.of<AuthBloc>(context);
-
-    return StreamBuilder<Admin>(
-      stream: vendorBloc.admin,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData && widget.adminId != null) {
-          return Scaffold(
-            body: Center(
-                child: (Platform.isIOS)
-                    ? CupertinoActivityIndicator()
-                    : CircularProgressIndicator()),
-          );
-        }
-
-        Admin vendor = snapshot.data;
-
-        if (vendor != null) {
-          //Edit Logic
-          loadValues(vendorBloc, vendor, authBloc.userId);
-        } else {
-          //Add Logic
-          loadValues(vendorBloc, null, authBloc.userId);
-        }
-
-        return (Platform.isIOS)
-            ? AppSliverScaffold.cupertinoSliverScaffold(
-                navTitle: '',
-                pageBody: pageBody(true, vendorBloc, context, vendor),
-                context: context)
-            : AppSliverScaffold.materialSliverScaffold(
-                navTitle: '',
-                pageBody: pageBody(false, vendorBloc, context, vendor),
-                context: context);
-      },
-    );
-  }
-
-  Widget pageBody(bool isIOS, AdminBloc vendorBloc, BuildContext context,
-      Admin existingVendor) {
-    var pageLabel = (existingVendor != null) ? 'Edit Profile' : 'Add Profile';
-    return ListView(
-      children: <Widget>[
-        Text(
-          pageLabel,
-          style: TextStyles.subtitle,
-          textAlign: TextAlign.center,
-        ),
-        Padding(
-          padding: BaseStyles.listPadding,
-          child: Divider(color: AppColors.darkblue),
-        ),
-        StreamBuilder<String>(
-            stream: vendorBloc.name,
-            builder: (context, snapshot) {
-              return AppTextField(
-                hintText: 'Vendor Name',
-                cupertinoIcon: FontAwesomeIcons.sign,
-                materialIcon: FontAwesomeIcons.sign,
-                isIOS: isIOS,
-                errorText: snapshot.error,
-                initialText:
-                    (existingVendor != null) ? existingVendor.name : null,
-                onChanged: vendorBloc.changeName,
-              );
-            }),
-        StreamBuilder<String>(
-            stream: vendorBloc.position,
-            builder: (context, snapshot) {
-              return AppTextField(
-                hintText: 'Description',
-                maxLines: 7,
-                cupertinoIcon: FontAwesomeIcons.book,
-                materialIcon: FontAwesomeIcons.book,
-                isIOS: isIOS,
-                errorText: snapshot.error,
-                initialText: (existingVendor != null)
-                    ? existingVendor.position
-                    : null,
-                onChanged: vendorBloc.changePosition,
-              );
-            }),
-        StreamBuilder<bool>(
-          stream: vendorBloc.isUploading,
-          builder: (context, snapshot) {
-            return (!snapshot.hasData || snapshot.data == false)
-                ? Container()
-                : Center(
-                    child: (Platform.isIOS)
-                        ? CupertinoActivityIndicator()
-                        : CircularProgressIndicator(),
-                  );
-          },
-        ),
-        StreamBuilder<String>(
-            stream: vendorBloc.imageUrl,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData || snapshot.data == "")
-                return AppButton(
-                  buttonType: ButtonType.Straw,
-                  buttonText: 'Add Image',
-                  onPressed: vendorBloc.pickImage,
-                );
-
-              return Column(
+    final auth = Provider.of<AuthService>(context, listen: false);
+    pr = new ProgressDialog(context);
+    pr.style(message: 'Please wait, submitting details');
+    return new Scaffold(
+      appBar: AppBar(
+        elevation: 3.0,
+        backgroundColor: Colors.green,
+        title: Text('Edit My Profile',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            )),
+        titleSpacing: -5.0,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              //height: deviceHeight,
+              padding: EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: BaseStyles.listPadding,
-                    child: Image.network(snapshot.data),
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              AuthTextFeildLabel(
+                                label: 'Full Name ',
+                              ),
+                              AuthTextField(
+                                width: double.infinity,
+                                formField: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  controller: _fullName,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide.none),
+                                  ),
+                                  keyboardType: TextInputType.name,
+                                  textCapitalization: TextCapitalization.words,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please enter your full name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              AuthTextFeildLabel(
+                                label: 'Email Address ',
+                              ),
+                              AuthTextField(
+                                width: double.infinity,
+                                formField: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  controller: _email,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide.none),
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (val) => val.trim().isEmpty
+                                      ? 'Enter Email Address'
+                                      : !val.trim().contains('@') ||
+                                              !val.trim().contains('.')
+                                          ? 'enter a valid email address'
+                                          : null,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        //Marital Status
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              AuthTextFeildLabel(
+                                label: 'Marital Status',
+                              ),
+                              AuthTextField(
+                                width: double.infinity,
+                                formField: TextFormField(
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: _marital,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide.none),
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    validator: (val) {
+                                      if (val.isEmpty) {
+                                        return 'enter marital status';
+                                      }
+                                      return null;
+                                    }),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // address
+
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              AuthTextFeildLabel(
+                                label: 'Home Address ',
+                              ),
+                              AuthTextField(
+                                width: double.infinity,
+                                formField: TextFormField(
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: _address,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide.none),
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
+                                    validator: (val) {
+                                      if (val.isEmpty) {
+                                        return 'enter address';
+                                      }
+                                      return null;
+                                    }),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // City and State
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    AuthTextFeildLabel(
+                                      label: 'City ',
+                                    ),
+                                    AuthTextField(
+                                      width: MediaQuery.of(context).size.width /
+                                              2.3 +
+                                          1,
+                                      formField: TextFormField(
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        controller: _city,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none),
+                                        ),
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'city cannot be empty';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              //State
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    AuthTextFeildLabel(
+                                      label: 'State ',
+                                    ),
+                                    AuthTextField(
+                                      width: MediaQuery.of(context).size.width /
+                                              2.3 +
+                                          1,
+                                      formField: TextFormField(
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        controller: _state,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none),
+                                        ),
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'state cannot be empty';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              AuthTextFeildLabel(
+                                label: 'Phone Number',
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 4,
+                                    child: AuthTextField(
+                                      formField: TextFormField(
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        controller: _phoneNumber,
+                                        maxLength: 11,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none),
+                                        ),
+                                        keyboardType: TextInputType.number,
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please enter phone number';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 25.0),
+                              PrimaryButton(
+                                height: 45.0,
+                                width: double.infinity,
+                                color: Colors.green,
+                                buttonTitle: 'Submit Details',
+                                blurRadius: 7.0,
+                                roundedEdge: 2.5,
+                                onTap: () async {
+                                  if (_phoneNumber.text != '' &&
+                                      _fullName.text != '' &&
+                                      _email.text != '' &&
+                                      _city.text != '' &&
+                                      _address.text != '' &&
+                                      _state.text != '' &&
+                                      _marital.text != '') {
+                                    pr.show();
+                                    adminRef.doc(widget.adminId).update({
+                                      'name': _fullName.text,
+                                      'email': _email.text,
+                                      'city': _city.text,
+                                      'phone': _phoneNumber.text,
+                                      'address': _address.text,
+                                      'marital': _marital.text,
+                                      'state': _state.text,
+                                    }).then((value) {
+                                      pr.hide();
+                                      Fluttertoast.showToast(
+                                          msg: "Details Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.green,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                      Navigator.pop(context);
+                                    }).catchError((onError) {
+                                      pr.hide();
+                                      Fluttertoast.showToast(
+                                          msg: "Update failed, try again",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    });
+                                  }
+                                },
+                              ),
+                              SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  AppButton(
-                    buttonType: ButtonType.Straw,
-                    buttonText: 'Change Image',
-                    onPressed: vendorBloc.pickImage,
-                  )
                 ],
-              );
-            }),
-        StreamBuilder<bool>(
-            stream: vendorBloc.isValid,
-            builder: (context, snapshot) {
-              return AppButton(
-                buttonType: (snapshot.data == true)
-                    ? ButtonType.DarkBlue
-                    : ButtonType.Disabled,
-                buttonText: 'Save Profile',
-                onPressed: vendorBloc.saveVendor,
-              );
-            }),
-      ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
-  }
-
-  loadValues(AdminBloc vendorBloc, Admin vendor, String vendorId) {
-    vendorBloc.changeAdminId(vendorId);
-
-    if (vendor != null) {
-      //Edit
-      vendorBloc.changeName(vendor.name);
-      vendorBloc.changePosition(vendor.position);
-      vendorBloc.changeImageUrl(vendor.imageUrl ?? '');
-    } else {
-      //Add
-      vendorBloc.changeName(null);
-      vendorBloc.changePosition(null);
-      vendorBloc.changeImageUrl('');
-    }
   }
 }

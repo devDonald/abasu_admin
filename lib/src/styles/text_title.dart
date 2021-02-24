@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,16 +8,17 @@ class TitleText extends StatelessWidget {
   final FontWeight fontWeight;
   const TitleText(
       {Key key,
-        this.text,
-        this.fontSize = 18,
-        this.color = Colors.black,
-        this.fontWeight = FontWeight.w800
-      })
+      this.text,
+      this.fontSize = 18,
+      this.color = Colors.black,
+      this.fontWeight = FontWeight.w800})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        style: GoogleFonts.muli(
-            fontSize: fontSize, fontWeight: fontWeight, color: color));
+    return Center(
+      child: Text(text,
+          style: GoogleFonts.muli(
+              fontSize: fontSize, fontWeight: fontWeight, color: color)),
+    );
   }
 }
