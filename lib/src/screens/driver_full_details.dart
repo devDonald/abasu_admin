@@ -358,7 +358,7 @@ class RemoveDriver {
 
 showRemoveDialog(BuildContext context, String userId) {
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       driverRef.doc(userId).get().then((doc) {
@@ -378,7 +378,7 @@ showRemoveDialog(BuildContext context, String userId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);

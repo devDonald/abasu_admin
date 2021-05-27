@@ -46,7 +46,6 @@ class _ViewAttachedImageState extends State<ViewAttachedImage> {
                   });
                 },
                 child: PhotoView(
-                  loadFailedChild: CircularProgressIndicator(),
                   imageProvider: widget.image ??
                       CachedNetworkImageProvider(
                         'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbitsofco.de%2Fhandling-broken-images-with-service-worker%2F&psig=AOvVaw2D0w00IWnhTJMNlT7r3t_x&ust=1601150393153000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCd15iMhewCFQAAAAAdAAAAABAD',

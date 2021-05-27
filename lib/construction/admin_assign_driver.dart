@@ -195,7 +195,7 @@ class _AdminAsignDriverState extends State<AdminAsignDriver> {
                     // usually buttons at the bottom of the dialog
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: FlatButton(
+                      child: TextButton(
                         child: new Text(
                           'Done'.toUpperCase(),
                           style: TextStyle(

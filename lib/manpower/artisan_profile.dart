@@ -432,7 +432,7 @@ class AdminTools {
 
 showVerifyDialog(BuildContext context, String userId) {
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -450,7 +450,7 @@ showVerifyDialog(BuildContext context, String userId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);
@@ -478,7 +478,7 @@ showVerifyDialog(BuildContext context, String userId) {
 
 showUnVerifyDialog(BuildContext context, String userId) {
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -496,7 +496,7 @@ showUnVerifyDialog(BuildContext context, String userId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);
@@ -524,7 +524,7 @@ showUnVerifyDialog(BuildContext context, String userId) {
 
 showRemoveTopArtisanDialog(BuildContext context, String userId) {
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -542,7 +542,7 @@ showRemoveTopArtisanDialog(BuildContext context, String userId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);
@@ -570,7 +570,7 @@ showRemoveTopArtisanDialog(BuildContext context, String userId) {
 
 showTopArtisanDialog(BuildContext context, String userId) {
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -588,7 +588,7 @@ showTopArtisanDialog(BuildContext context, String userId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);

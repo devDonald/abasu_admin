@@ -17,7 +17,7 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(text,
-          style: GoogleFonts.muli(
+          style: GoogleFonts.mulish(
               fontSize: fontSize, fontWeight: fontWeight, color: color)),
     );
   }

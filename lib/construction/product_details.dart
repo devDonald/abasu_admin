@@ -168,7 +168,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                               Text(
                                 '₦${format.format(widget.itemPrice)}',
-                                style: GoogleFonts.muli(
+                                style: GoogleFonts.mulish(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black),
@@ -337,7 +337,7 @@ class AdminTools {
 
 showDeleteProductDialog(BuildContext context, String productId) {
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       await driverRef.doc(productId).get().then((doc) {
@@ -357,7 +357,7 @@ showDeleteProductDialog(BuildContext context, String productId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);
@@ -385,7 +385,7 @@ showDeleteProductDialog(BuildContext context, String productId) {
 
 showRemoveTopProductDialog(BuildContext context, String productId) {
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -403,7 +403,7 @@ showRemoveTopProductDialog(BuildContext context, String productId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);
@@ -432,7 +432,7 @@ showRemoveTopProductDialog(BuildContext context, String productId) {
 showTopProductDialog(BuildContext context, String productId) {
   BuildContext dialogContext;
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -450,7 +450,7 @@ showTopProductDialog(BuildContext context, String productId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);

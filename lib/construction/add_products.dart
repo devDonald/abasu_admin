@@ -28,6 +28,8 @@ class _AddProductsState extends State<AddProducts> {
   final _productDesc = TextEditingController();
   final _price = TextEditingController();
   final _available = TextEditingController();
+  final _weight = TextEditingController();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   File pickedImage;
@@ -76,6 +78,7 @@ class _AddProductsState extends State<AddProducts> {
             'description': _productDesc.text,
             'longitude': longitude,
             'latitude': latitude,
+            'weight': _weight.text,
             'category': _category,
             'productId': _docRef.id,
             'adminId': uid
@@ -94,6 +97,7 @@ class _AddProductsState extends State<AddProducts> {
             _price.clear();
             _productDesc.clear();
             _available.clear();
+            _weight.clear();
           }).catchError((onError) {
             pr.hide();
             Fluttertoast.showToast(
@@ -266,6 +270,17 @@ class _AddProductsState extends State<AddProducts> {
                 textController: _available,
               ),
               SizedBox(height: 16.5),
+              PostLabel(label: 'Weight of Product'),
+              SizedBox(height: 9.5),
+              PostTextFeild(
+                isBorder: true,
+                capitalization: TextCapitalization.sentences,
+                hint: 'weight in kg',
+                maxLines: 1, //fix
+                keyboardType: TextInputType.number,
+                textController: _weight,
+              ),
+              SizedBox(height: 16.5),
               DiscussOutlineButton(
                 onTap: () {
                   getImageFile(ImageSource.gallery);
@@ -313,6 +328,7 @@ class _AddProductsState extends State<AddProducts> {
                         _price.text != '' &&
                         pickedImage != null &&
                         _category != '' &&
+                        _weight.text != '' &&
                         _available.text != '' &&
                         _subCategory != '') {
                       _uploadProduct();

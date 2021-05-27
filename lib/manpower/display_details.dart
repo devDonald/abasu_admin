@@ -288,7 +288,7 @@ class MakeAdmin {
 
 showAdminDialog(BuildContext context, String userId) {
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("yes"),
     onPressed: () async {
       await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -306,7 +306,7 @@ showAdminDialog(BuildContext context, String userId) {
       });
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("No"),
     onPressed: () {
       Navigator.pop(context);

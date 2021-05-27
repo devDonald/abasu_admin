@@ -259,7 +259,7 @@ class ArtisanRequestDetails extends StatelessWidget {
 
   showCompleteDialog(BuildContext context, String requestId) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text("yes"),
       onPressed: () async {
         await FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -304,7 +304,7 @@ class ArtisanRequestDetails extends StatelessWidget {
         });
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text("No"),
       onPressed: () {
         Navigator.pop(context);
