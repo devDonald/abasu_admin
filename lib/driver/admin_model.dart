@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DriverModel {
+class AdminModel {
   String adminId;
   String name;
   String email;
@@ -12,16 +12,15 @@ class DriverModel {
   String photo;
   int year, month, day;
   bool isVerified;
-  String country, experience;
+  String country;
 
-  DriverModel({
+  AdminModel({
     this.adminId,
     this.name,
     this.email,
     this.address,
     this.phone,
     this.gender,
-    this.experience,
     this.state,
     this.city,
     this.dob,
@@ -41,7 +40,6 @@ class DriverModel {
       'name': name,
       'address': address,
       'gender': gender,
-      'experience': experience,
       'state': state,
       'dob': dob,
       'phone': phone,
@@ -57,14 +55,13 @@ class DriverModel {
     };
   }
 
-  DriverModel.fromFirestore(Map<String, dynamic> snapshot)
+  AdminModel.fromFirestore(Map<String, dynamic> snapshot)
       : adminId = snapshot['adminId'] ?? '',
         name = snapshot['name'] ?? '',
         email = snapshot['email'] ?? '',
         address = snapshot['address'] ?? '',
         phone = snapshot['phone'] ?? '',
         gender = snapshot['gender'] ?? '',
-        experience = snapshot['experience'] ?? '',
         state = snapshot['state'] ?? '',
         city = snapshot['city'] ?? '',
         dob = snapshot['dob'] ?? '',
@@ -83,7 +80,6 @@ class DriverModel {
       'name': name,
       'address': address,
       'gender': gender,
-      'experience': experience,
       'state': state,
       'dob': dob,
       'phone': phone,
@@ -98,14 +94,13 @@ class DriverModel {
     };
   }
 
-  DriverModel.fromSnapshot(DocumentSnapshot snapshot) {
+  AdminModel.fromSnapshot(DocumentSnapshot snapshot) {
     this.adminId = snapshot['adminId'];
     this.name = snapshot['name'];
     this.email = snapshot['email'];
     this.address = snapshot['address'];
     this.phone = snapshot['phone'];
     this.gender = snapshot['gender'];
-    this.experience = snapshot['experience'];
     this.state = snapshot['state'];
     this.city = snapshot['city'];
     this.dob = snapshot['dob'];

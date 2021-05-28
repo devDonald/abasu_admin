@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmers_market/cards/card.dart';
 import 'package:farmers_market/src/screens/admin_menu.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,22 +27,13 @@ class _NotificationCenterState extends State<NotificationCenter> {
   String postLikes1, videoUrl, caption;
 
   void updateNotificationCount() async {
-    User _currentUser = FirebaseAuth.instance.currentUser;
-    String authid = _currentUser.uid;
-    var snapshots = adminFeed.snapshots();
-    try {
-      await snapshots.forEach((snapshot) async {
-        List<DocumentSnapshot> documents = snapshot.docs;
-
-        for (var document in documents) {
-          await document.reference.update(<String, dynamic>{
-            'seen': true,
-          });
-        }
+    await adminFeed.where('seen', isEqualTo: false).get().then((value) {
+      value.docs.forEach((document) async {
+        document.reference.update(<String, dynamic>{
+          'seen': true,
+        });
       });
-    } catch (e) {
-      print(e.toString());
-    }
+    });
   }
   //
   // void toBirthday() {

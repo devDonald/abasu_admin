@@ -277,7 +277,7 @@ class _AddProductsState extends State<AddProducts> {
                 capitalization: TextCapitalization.sentences,
                 hint: 'weight in kg',
                 maxLines: 1, //fix
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 textController: _weight,
               ),
               SizedBox(height: 16.5),
@@ -334,8 +334,7 @@ class _AddProductsState extends State<AddProducts> {
                       _uploadProduct();
                     } else {
                       setState(() {
-                        error =
-                            'Title, Question, Tags and Subject cannot be empty';
+                        error = 'all fields must be completed';
                       });
                     }
                   },

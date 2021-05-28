@@ -1,31 +1,32 @@
-import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Product with ChangeNotifier {
-  final String productName;
-  final String category;
-  final String subCategory;
-  final int unitPrice;
-  final int availableUnits;
-  final String adminId;
-  final String productId;
-  final String imageUrl;
-  final bool approved;
-  final String description;
-  final double latitude, longitude;
+class Product {
+  String productName;
+  String category;
+  String subCategory;
+  int unitPrice;
+  int availableUnits;
+  String adminId;
+  String productId;
+  String imageUrl, weight;
+  bool approved;
+  String description;
+  double latitude, longitude;
 
   Product(
-      {@required this.approved,
-      @required this.availableUnits,
+      {this.productName,
       this.category,
-      this.imageUrl = "",
-      this.description = "",
-      this.longitude,
+      this.subCategory,
+      this.unitPrice,
+      this.availableUnits,
+      this.adminId,
+      this.productId,
+      this.imageUrl,
+      this.weight,
+      this.approved,
+      this.description,
       this.latitude,
-      @required this.productId,
-      @required this.productName,
-      @required this.unitPrice,
-      @required this.subCategory,
-      @required this.adminId});
+      this.longitude});
 
   Map<String, dynamic> toMap() {
     return {
@@ -38,23 +39,26 @@ class Product with ChangeNotifier {
       'description': description,
       'longitude': longitude,
       'latitude': latitude,
+      'weight': weight,
       'category': category,
       'productId': productId,
       'adminId': adminId
     };
   }
 
-  Product.fromFirestore(Map<String, dynamic> firestore)
-      : productName = firestore['productName'],
-        subCategory = firestore['subCategory'],
-        unitPrice = firestore['unitPrice'],
-        availableUnits = firestore['availableUnits'],
-        approved = firestore['approved'],
-        imageUrl = firestore['imageUrl'],
-        description = firestore['description'],
-        latitude = firestore['latitude'],
-        longitude = firestore['longitude'],
-        productId = firestore['productId'],
-        category = firestore['category'],
-        adminId = firestore['adminId'];
+  Product.fromSnapshot(DocumentSnapshot firestore) {
+    productName = firestore['productName'];
+    subCategory = firestore['subCategory'];
+    unitPrice = firestore['unitPrice'];
+    availableUnits = firestore['availableUnits'];
+    approved = firestore['approved'];
+    imageUrl = firestore['imageUrl'];
+    description = firestore['description'];
+    latitude = firestore['latitude'];
+    weight = firestore['weight'];
+    longitude = firestore['longitude'];
+    productId = firestore['productId'];
+    category = firestore['category'];
+    adminId = firestore['adminId'];
+  }
 }

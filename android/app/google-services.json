@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "512130844650-dt2nralmbbrrdjjqtbfjjrjjps0q4ntt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abasu.abasu_driver",
+            "certificate_hash": "e666dcc3244ef10d55088e8636c6d36df574b992"
+          }
+        },
+        {
           "client_id": "512130844650-d4fsrrt2bpg5dufodh6c608e3t81p88s.apps.googleusercontent.com",
           "client_type": 3
         }

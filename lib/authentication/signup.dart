@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:farmers_market/driver/driver_model.dart';
+import 'package:farmers_market/driver/admin_model.dart';
 import 'package:farmers_market/src/models/constants.dart';
 import 'package:farmers_market/src/services/firestore_service.dart';
 import 'package:farmers_market/src/styles/buttons.dart';
@@ -535,7 +535,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             .createAdmin(
                                                 _email.text,
                                                 _password.text,
-                                                DriverModel(
+                                                AdminModel(
                                                     email: _email.text,
                                                     phone: _phoneNumber.text,
                                                     gender: selectedGender,

@@ -1,16 +1,15 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ViewAttachedImage extends StatefulWidget {
   static const String id = 'ViewAttachedImage';
   ViewAttachedImage({
-    Key key,
-    this.image,
-    this.url,
-    this.text,
+    Key? key,
+    required this.image,
+    required this.url,
+    required this.text,
   }) : super(key: key);
   final String text, url;
   final ImageProvider image;
@@ -46,10 +45,7 @@ class _ViewAttachedImageState extends State<ViewAttachedImage> {
                   });
                 },
                 child: PhotoView(
-                  imageProvider: widget.image ??
-                      CachedNetworkImageProvider(
-                        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fbitsofco.de%2Fhandling-broken-images-with-service-worker%2F&psig=AOvVaw2D0w00IWnhTJMNlT7r3t_x&ust=1601150393153000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCd15iMhewCFQAAAAAdAAAAABAD',
-                      ),
+                  imageProvider: widget.image,
                   minScale: PhotoViewComputedScale.contained * 1.0,
                   maxScale: PhotoViewComputedScale.contained * 2.5,
                   initialScale: PhotoViewComputedScale.contained * 1.0,
@@ -93,7 +89,7 @@ class _ViewAttachedImageState extends State<ViewAttachedImage> {
                       width: deviceWidth,
                       color: Colors.black.withOpacity(0.15),
                       child: Text(
-                        widget.text ?? '',
+                        widget.text,
                         style: TextStyle(color: Colors.white, fontSize: 15.0),
                       ),
                     ),

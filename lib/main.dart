@@ -1,6 +1,7 @@
 import 'package:farmers_market/authentication/login.dart';
 import 'package:farmers_market/construction/add_products.dart';
 import 'package:farmers_market/construction/construction_materials.dart';
+import 'package:farmers_market/construction/edit_product.dart';
 import 'package:farmers_market/construction/product_details.dart';
 import 'package:farmers_market/construction/products_menu.dart';
 import 'package:farmers_market/construction/sub_materials.dart';
@@ -9,7 +10,6 @@ import 'package:farmers_market/driver/driver_profile.dart';
 import 'package:farmers_market/manpower/all_manpower.dart';
 import 'package:farmers_market/manpower/manpower.dart';
 import 'package:farmers_market/providers/add_driver_provider.dart';
-import 'package:farmers_market/src/product/edit_product.dart';
 import 'package:farmers_market/src/screens/admin_menu.dart';
 import 'package:farmers_market/src/screens/notifications.dart';
 import 'package:farmers_market/src/screens/profile.dart';

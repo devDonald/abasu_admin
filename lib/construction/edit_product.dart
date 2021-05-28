@@ -14,7 +14,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 class EditProduct extends StatefulWidget {
   static const String id = 'AddProducts';
-  final String productName,
+  final String productName, weight,
       productDesc,
       category,
       subcategory,
@@ -24,6 +24,7 @@ class EditProduct extends StatefulWidget {
   EditProduct(
       {Key key,
       this.productName,
+        this.weight,
       this.productDesc,
       this.category,
       this.subcategory,
@@ -50,6 +51,8 @@ class _EditProductState extends State<EditProduct> {
   final _productDesc = TextEditingController();
   final _price = TextEditingController();
   final _available = TextEditingController();
+  final _weight = TextEditingController();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   File pickedImage;
@@ -95,6 +98,7 @@ class _EditProductState extends State<EditProduct> {
             'availableUnits': int.parse(_available.text),
             'imageUrl': _uploadedImageURL,
             'description': _productDesc.text,
+            'weight': _weight.text,
             'category': _category,
           }).then((_) {
             pr.hide();
@@ -111,6 +115,7 @@ class _EditProductState extends State<EditProduct> {
             _price.clear();
             _productDesc.clear();
             _available.clear();
+            _weight.clear();
           }).catchError((onError) {
             pr.hide();
             Fluttertoast.showToast(
@@ -131,6 +136,7 @@ class _EditProductState extends State<EditProduct> {
           'unitPrice': int.parse(_price.text),
           'availableUnits': int.parse(_available.text),
           'imageUrl': onlineImage,
+          'weight': _weight.text,
           'description': _productDesc.text,
           'category': _category,
         }).then((_) {
@@ -148,6 +154,7 @@ class _EditProductState extends State<EditProduct> {
           _price.clear();
           _productDesc.clear();
           _available.clear();
+          _weight.clear();
         }).catchError((onError) {
           pr.hide();
           Fluttertoast.showToast(
@@ -161,14 +168,7 @@ class _EditProductState extends State<EditProduct> {
         });
       }
     } catch (e) {}
-    //bodyValue.clear();
-    // setState(() {
-    //   pickedImage = null;
-    //   _productName.clear();
-    //   _price.clear();
-    //   _productDesc.clear();
-    //   _available.clear();
-    // });
+
   }
 
   String _category, _subCategory;
@@ -184,6 +184,7 @@ class _EditProductState extends State<EditProduct> {
         _category = widget.category;
         _subCategory = widget.subcategory;
         onlineImage = widget.image;
+        _weight.text = widget.weight;
       });
     }
     super.initState();
@@ -321,6 +322,17 @@ class _EditProductState extends State<EditProduct> {
                 textController: _available,
               ),
               SizedBox(height: 16.5),
+              PostLabel(label: 'Weight of Product'),
+              SizedBox(height: 9.5),
+              PostTextFeild(
+                isBorder: true,
+                capitalization: TextCapitalization.sentences,
+                hint: 'weight in kg',
+                maxLines: 1, //fix
+                keyboardType: TextInputType.text,
+                textController: _weight,
+              ),
+              SizedBox(height: 16.5),
               DiscussOutlineButton(
                 onTap: () {
                   getImageFile(ImageSource.gallery);
@@ -375,6 +387,7 @@ class _EditProductState extends State<EditProduct> {
                         _productDesc.text != '' &&
                         _price.text != '' &&
                         _category != '' &&
+                        _weight.text!='' &&
                         _available.text != '' &&
                         _subCategory != '') {
                       _uploadProduct();

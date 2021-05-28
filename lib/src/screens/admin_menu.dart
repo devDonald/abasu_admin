@@ -44,7 +44,7 @@ class AdminHome extends StatefulWidget {
 }
 
 class _AdminHomeState extends State<AdminHome> {
-  StreamSubscription _userSubscription;
+  late StreamSubscription _userSubscription;
 
   void getCategories() async {
     root
@@ -106,13 +106,8 @@ class _AdminHomeState extends State<AdminHome> {
             StreamBuilder<QuerySnapshot>(
                 stream: adminFeed.where('seen', isEqualTo: false).snapshots(),
                 builder: (context, snapshot) {
-                  int notiCount = 0;
-                  if (snapshot.hasData) {
-                    notiCount = snapshot.data.docs.length;
-                  }
-
                   return NotificationsCounter(
-                    count: snapshot.data.docs.length ?? 0,
+                    count: snapshot.data!.docs.length,
                     onTap: () {
                       Navigator.of(context).pushNamed('/notification');
                     },
@@ -161,6 +156,7 @@ Widget pageBody(BuildContext context) {
               child: HomeView(
                 title: 'My Profile',
                 image: 'assets/images/user.png',
+                comingSoon: '',
               ),
             ),
             GestureDetector(
@@ -174,6 +170,7 @@ Widget pageBody(BuildContext context) {
               child: HomeView(
                 title: 'Products',
                 image: 'assets/images/building.png',
+                comingSoon: '',
               ),
             ),
 
@@ -188,6 +185,7 @@ Widget pageBody(BuildContext context) {
               child: HomeView(
                 title: 'Artisans',
                 image: 'assets/images/manpower.png',
+                comingSoon: '',
               ),
             ),
             GestureDetector(
@@ -201,6 +199,7 @@ Widget pageBody(BuildContext context) {
               child: HomeView(
                 title: 'Other Users',
                 image: 'assets/images/users.png',
+                comingSoon: '',
               ),
             ),
             GestureDetector(
@@ -214,6 +213,7 @@ Widget pageBody(BuildContext context) {
               child: HomeView(
                 title: 'Drivers',
                 image: 'assets/images/driver.png',
+                comingSoon: '',
               ),
             ),
             //Product Orders
@@ -228,6 +228,7 @@ Widget pageBody(BuildContext context) {
               child: HomeView(
                 title: 'Product Orders',
                 image: 'assets/images/orders.png',
+                comingSoon: '',
               ),
             ),
 
@@ -242,6 +243,7 @@ Widget pageBody(BuildContext context) {
               child: HomeView(
                 title: 'Order History',
                 image: 'assets/images/history.png',
+                comingSoon: '',
               ),
             ),
             //Artisan Orders
@@ -256,6 +258,7 @@ Widget pageBody(BuildContext context) {
               child: HomeView(
                 title: 'Artisan Requests',
                 image: 'assets/images/artisan_request.png',
+                comingSoon: '',
               ),
             ),
           ],
@@ -269,7 +272,11 @@ class HomeView extends StatelessWidget {
   final String title;
   final String image, comingSoon;
 
-  const HomeView({Key key, this.title, this.image, this.comingSoon})
+  const HomeView(
+      {Key? key,
+      required this.title,
+      required this.image,
+      required this.comingSoon})
       : super(key: key);
 
   @override

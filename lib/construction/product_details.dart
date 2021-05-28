@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:farmers_market/src/product/edit_product.dart';
+import 'package:farmers_market/construction/edit_product.dart';
 import 'package:farmers_market/src/screens/admin_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class ProductDetails extends StatefulWidget {
   final String itemName;
   final String itemImage, productId;
   final String itemSubCategory, category;
-  final String itemDescription;
+  final String itemDescription, weight;
   final int itemPrice;
   final int itemQuantity;
   final String itemType;
@@ -20,6 +20,7 @@ class ProductDetails extends StatefulWidget {
   ProductDetails(
       {this.itemName,
       this.itemImage,
+        this.weight,
       this.itemSubCategory,
       this.itemDescription,
       this.itemPrice,
@@ -300,6 +301,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => EditProduct(
+                                weight: widget.weight,
                                 productId: widget.productId,
                                 productName: widget.itemName,
                                 price: widget.itemPrice,

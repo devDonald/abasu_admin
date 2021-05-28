@@ -1,4 +1,4 @@
-import 'package:farmers_market/driver/driver_model.dart';
+import 'package:farmers_market/driver/admin_model.dart';
 import 'package:farmers_market/src/screens/admin_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +11,10 @@ class AuthService with ChangeNotifier {
   User user;
   String adminId;
 
-  DriverModel _userFromFirebaseUser(User user) {
+  AdminModel _userFromFirebaseUser(User user) {
     if (user != null) {
       adminId = user.uid;
-      return DriverModel(
+      return AdminModel(
           adminId: user.uid, email: user.email, name: user.displayName);
     } else {
       return null;
@@ -129,7 +129,7 @@ class AuthService with ChangeNotifier {
   }
 
   Future createAdmin(
-      String email, String password, DriverModel driverModel) async {
+      String email, String password, AdminModel driverModel) async {
     try {
       var result = await _auth.createUserWithEmailAndPassword(
         email: email,

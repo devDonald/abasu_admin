@@ -52,15 +52,14 @@ class ProductCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: ListView(
             children: <Widget>[
               Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
                   Image.network(
                     productImage,
-                    height: 120.0,
+                    height: 100.0,
                     width: 120.0,
                   )
                 ],

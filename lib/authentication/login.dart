@@ -13,7 +13,7 @@ class LoginScreen extends StatefulWidget {
   static const String id = 'Login';
   final bool asArtisan;
 
-  const LoginScreen({Key key, this.asArtisan}) : super(key: key);
+  const LoginScreen({Key? key, required this.asArtisan}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -26,13 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email = '';
   String _password = '';
   String _error = '';
-  ProgressDialog _pr;
+  ProgressDialog? _pr;
 
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthService>(context, listen: false);
     _pr = new ProgressDialog(context);
-    _pr.style(message: 'Please wait, Authenticating User');
+    _pr!.style(message: 'Please wait, Authenticating User');
 
     return Scaffold(
       appBar: AppBar(
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               OutlineInputBorder(borderSide: BorderSide.none),
                         ),
                         keyboardType: TextInputType.emailAddress,
-                        validator: (val) => val.trim().isEmpty
+                        validator: (val) => val!.trim().isEmpty
                             ? 'Enter Email Address'
                             : !val.trim().contains('@') ||
                                     !val.trim().contains('.')
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           border:
                               OutlineInputBorder(borderSide: BorderSide.none),
                         ),
-                        validator: (val) => val.length < 8
+                        validator: (val) => val!.length < 8
                             ? 'Enter Password 8 or more characters'
                             : null,
                         obscureText: true,
@@ -143,21 +143,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       blurRadius: 7.0,
                       roundedEdge: 2.5,
                       onTap: () async {
-                        if (_formKey.currentState.validate()) {
+                        if (_formKey.currentState!.validate()) {
                           setState(() {
-                            _pr.show();
+                            _pr!.show();
                           });
                           dynamic result =
                               await auth.signInUserWithEmailAndPassword(
                                   _email, _password);
                           if (result == null) {
-                            _pr.hide();
+                            _pr!.hide();
                             setState(() {
                               _error =
                                   'Please Supply a valid email/password combination';
                             });
                           } else {
-                            _pr.hide();
+                            _pr!.hide();
                             await adminRef
                                 .doc(authId.adminId)
                                 .get()
@@ -236,8 +236,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
 class ScreenTitleIndicator extends StatelessWidget {
   const ScreenTitleIndicator({
-    Key key,
-    this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
   final String title;
   @override
@@ -275,14 +275,10 @@ class ScreenTitleIndicator extends StatelessWidget {
 
 class AuthTextFeildLabel extends StatelessWidget {
   const AuthTextFeildLabel({
-    Key key,
-    this.label,
-    this.controller,
-    this.onChanged,
+    Key? key,
+    required this.label,
   }) : super(key: key);
   final String label;
-  final TextEditingController controller;
-  final Function onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -316,9 +312,9 @@ class AuthTextFeildLabel extends StatelessWidget {
 
 class AuthTextField extends StatelessWidget {
   const AuthTextField({
-    this.width,
-    this.formField,
-    Key key,
+    required this.width,
+    required this.formField,
+    Key? key,
   }) : super(key: key);
   final double width;
   final TextFormField formField;
@@ -357,16 +353,16 @@ class PrimaryButton extends StatefulWidget {
   final bool enabled;
 
   const PrimaryButton({
-    Key key,
-    this.buttonTitle,
-    this.blurRadius,
-    this.roundedEdge,
-    this.color,
-    this.onTap,
+    Key? key,
+    required this.buttonTitle,
+    required this.blurRadius,
+    required this.roundedEdge,
+    required this.color,
+    required this.onTap,
     this.busy = false,
     this.enabled = false,
-    this.height,
-    this.width,
+    required this.height,
+    required this.width,
   }) : super(key: key);
 
   @override
